@@ -4,21 +4,23 @@
 int multiplicador = 1;
 void auto_fantastico(int * pin){
 	int retardo = 250000;
+	while(1){
 		for (int i = 0; i < 8; i++){
-		ledsOff(pin);
-		digitalWrite(pin[i], 1);
-		int salir = check_keys();
-		if(salir)
-			return;
-		usleep(retardo);
-	}
-	for (int i = 6; i > 0; i--){
-		ledsOff(pin);
-		digitalWrite(pin[i], 1);
-		int salir = check_keys();
-		if(salir)
-			return;
-		usleep(retardo);
+			ledsOff(pin);
+			digitalWrite(pin[i], 1);
+			int salir = check_keys();
+			if(salir)
+				return;
+			usleep(retardo);
+		}
+		for (int i = 6; i > 0; i--){
+			ledsOff(pin);
+			digitalWrite(pin[i], 1);
+			int salir = check_keys();
+			if(salir)
+				return;
+			usleep(retardo);
+		}
 	}
 }
 
@@ -245,10 +247,14 @@ void ledsOff(int * pin){
 
 int check_keys(){
 	int salir = 0;
-	char tec = getchar();
-	tec = getchar();
-	if(tec == 10)	//enter
-		salir = 1;
+	if(kbhit() != 0){
+		char tec = getchar();
+		tec = getchar();
+		if(tec == 10)	//enter
+			salir = 1;
+	}
+	
+	
 	/*
 	if(tec == 24) //flecha arriba
 		multiplicador = multiplicador + 0.1;
@@ -256,4 +262,16 @@ int check_keys(){
 		multiplicador = multiplicador - 0.1;
 	*/
 	return salir;
+}
+
+int kbhit()
+{
+    struct timeval tv;
+    fd_set fds;
+    tv.tv_sec = 0;
+    tv.tv_usec = 0;
+    FD_ZERO(&fds);
+    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
+    select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
+    return FD_ISSET(STDIN_FILENO, &fds);
 }
