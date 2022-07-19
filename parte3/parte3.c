@@ -121,5 +121,6 @@ int menu(){
 		if((op < 1) || (op > 8))
 			puts("Secuencia no valida, intente nuevamente");
 	}while((op < 1) || (op > 8));
+	printf("\033c");
 	return op; 
 }

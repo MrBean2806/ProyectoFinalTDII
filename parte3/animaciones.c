@@ -249,9 +249,11 @@ int check_keys(){
 	char tec = getchar();
 	if(tec == 10)	//enter
 		salir = 1;
+	/*
 	if(tec == 24) //flecha arriba
 		multiplicador = multiplicador + 0.1;
 	if(tec == 23) //flecha abajo
 		multiplicador = multiplicador - 0.1;
+	*/
 	return salir;
 }
