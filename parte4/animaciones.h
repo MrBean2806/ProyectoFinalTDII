@@ -18,5 +18,6 @@ void tiro_vertical(int *);
 void caida_pelota(int *);
 void ledsOff(int *);
 int check_keys();
+int kbhit();
 
 #endif
