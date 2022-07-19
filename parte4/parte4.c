@@ -8,159 +8,111 @@
 
 #include "EasyPIO_Custom.h"
 #include <unistd.h>
-#define retardo 250000
 
 int main(){
-    //pongo la terminal en modo no canonico para leer las teclas de flechas
-    struct termios t_old, t_new;
+	if( !login() ){
+		puts("Limite de intentos alcanzado");
+		puts("Abortando programa...");
+		//ABORTAR
+	}
+
+	pioInit();
+
+	for(int i=0; i<8; i++)
+		pinMode(pin[i], OUTPUT);  
+	
+	
+	while(1)
+	{
+		int op = menu();
+
+		switch(op){
+			case 1:	puts("Estas viendo el auto fantastico, para salir presione ENTER");
+					auto_fantastico(pin);
+					break;
+			case 2:	puts("Estas viendo el choque, para salir presione ENTER");
+					el_choque(pin);
+					break;
+			case 3:	puts("Estas viendo la apilada, para salir presione ENTER");
+					la_apilada(pin);
+					break;
+			case 4:	puts("Estas viendo la carrera, para salir presione ENTER");
+					la_carrera(pin);
+					break;
+			case 5:	puts("Estas viendo la pareja, para salir presione ENTER");
+					la_pareja(pin);
+					break;
+			case 6:	puts("Estas viendo la serpiente, para salir presione ENTER");
+					la_serpiente(pin);
+					break;
+			case 7:	puts("Estas viendo el tiro vertical, para salir presione ENTER");
+					tiro_vertical(pin);
+					break;
+			case 8:	puts("Estas viendo la caida de la pelota, para salir presione ENTER");
+					caida_pelota(pin);
+					break;
+		}
+		ledsOff(pin);
+	}
+	return 0;
+}
+
+//Devuelve 1 para acceso exitoso, 0 para 3 intentos fallidos
+int login(){
+	const char * password = "cinco";
+	int intentos = 0;
+	char tec = 0;
+	int i = 0;
+	char contra[6];
+	int login = 0;		//bandera para guardar el estado de los intentos
+	struct termios t_old, t_new;
 	tcgetattr(FD_STDIN, &t_old); //lee atributos del teclado
 	t_new = t_old;
 	t_new.c_lflag &= ~(ECHO | ICANON); // anula entrada canonica y eco
 	tcsetattr(FD_STDIN,TCSANOW,&t_new); //actualiza con los valores nuevos de la config. TCSANOW = activar la modificacion inmediatamente
 
-    
-
-    return 0;
-}
-
-void auto_fantastico(int * pin){
-	for (int i = 0; i < 8; i++){
-		for (int j = 0; j < 8; j++)
-			digitalWrite(pin[j], 0);
+	while(intentos < 3){
+		puts("Ingrese su password de 5 digitos:");
+		while (tec!=10){
+			tec=getchar();
+			if(i<5){
+				printf("*");
+				contra[i] = tec;
+				i++;
+			}
+		}
+		if( strncmp(contra, password, 5) == 0){
+			login = 1;
+			puts("\n---------------------------\n   Bienvenido al Sistema\n---------------------------");
+			break;
+		}else
+			puts("\n---------------------------\n     Password invalida\n---------------------------");
 		
-		digitalWrite(pin[i], 1);
-		usleep(retardo);
+		intentos++;
+		tec = 0;
+		i = 0;
 	}
-	for (int i = 6; i > 0; i--){
-		for (int j = 0; j < 8; j++)
-			digitalWrite(pin[j], 0);
-
-		digitalWrite(pin[i], 1);
-		usleep(retardo);
-	}
+	tcsetattr(FD_STDIN, TCSANOW, &t_old); //actualiza con los valores previos
+	return login;
+}
+ 
+int menu(){
+	int op;
+	do{
+		puts("Seleccione la secuencia deseada [1-8]");
+		puts("1. Auto fantastico");
+		puts("2. El choque");
+		puts("3. La apilada");
+		puts("4. La carrera");
+		puts("5. La pareja");
+		puts("6. La serpiente");
+		puts("7. Tiro vertical");
+		puts("8. Caida pelota");
+		scanf("%d", &op);
+		if((op < 1) || (op > 8))
+			puts("Secuencia no valida, intente nuevamente");
+	}while((op < 1) || (op > 8));
+	return op; 
 }
 
-void el_choque(int * pin){
-	for (int i = 0; i < 8; i++){
-		for (int j = 0; j < 8; j++)
-			digitalWrite(pin[j], 0);
 
-		digitalWrite(pin[i], 1);
-		digitalWrite(pin[7 - i], 1);
-		usleep(retardo);
-	}
-}
-
-void la_apilada(int * pin){
-	for(int i = 8; i > 0; i--){
-		for(int j = 0; j < i; j++){
-			for(int k = 0; k < i; k++)
-					digitalWrite(pin[k], 0);
-			digitalWrite(pin[j], 1);
-			usleep(retardo);
-		}
-		digitalWrite(pin[j-1], 0);
-		usleep(retardo);
-		digitalWrite(pin[j-1], 1);
-		usleep(retardo);
-	}
-}
-
-void la_carrera(int * pin){
-	int secuencia[18][8] = {
-{0,0,0,0,0,0,0,0},
-{0,0,0,0,0,0,0,0},
-{1,0,0,0,0,0,0,0},
-{1,0,0,0,0,0,0,0},
-{0,1,0,0,0,0,0,0},
-{0,1,0,0,0,0,0,0},
-{0,0,1,0,0,0,0,0},
-{0,0,1,0,0,0,0,0},
-{0,0,0,1,0,0,0,0},
-{0,0,0,1,0,0,0,0},
-{1,0,0,0,1,0,0,0},
-{0,1,0,0,1,0,0,0},
-{0,0,1,0,0,1,0,0},
-{0,0,0,1,0,1,0,0},
-{0,0,0,0,1,0,1,0},
-{0,0,0,0,0,1,1,0},
-{0,0,0,0,0,0,1,1},
-{0,0,0,0,0,0,0,1},
-};
-	for( int i=0; i < 18; i++){
-	  digitalWrite(pin[1], secuencia[i][0]);
-	  digitalWrite(pin[2], secuencia[i][1]);
-	  digitalWrite(pin[3], secuencia[i][2]);
-	  digitalWrite(pin[4], secuencia[i][3]);
-	  digitalWrite(pin[5], secuencia[i][4]);
-	  digitalWrite(pin[6], secuencia[i][5]);
-	  digitalWrite(pin[7], secuencia[i][6]);
-	  digitalWrite(pin[8], secuencia[i][7]);
-	  usleep(retardo);
-	}
-}
-
-void la_pareja(int * pin){
-	for (int i = 0; i <= 8; i++){
-		if(suma == 3){
-			suma = 0;
-			i = i - 2;
-		}
-		for (int j = 0; j < 8; j++)
-			digitalWrite(pin[j], 0);
-
-		if(i != 8)
-				digitalWrite(pin[i], 1);
-		if(i != 0)
-				digitalWrite(pin[i-1], 1)
-		suma++;
-		usleep(retardo);
-	}
-	for (int j = 0; j < 8; j++)
-		digitalWrite(pin[j], 0);
-	suma = 0;
-	usleep(retardo);
-}
-
-void la_serpiente(int * pin){
-	int secuencia[][] = {
-	{1,1,1,1,0,0,0,0},
-	{0,1,1,1,1,0,0,0},
-	{0,0,1,1,1,1,0,0},
-	{0,0,0,1,1,1,1,0},
-	{0,0,0,0,1,1,1,1},
-	{1,0,0,0,0,1,1,1},
-	{1,1,0,0,0,0,1,1},
-	{1,1,1,0,0,0,0,1},
-	};
-
-	for( int i=0; i < 8; i++){
-	  digitalWrite(pin[1], secuencia[i][0]);
-	  digitalWrite(pin[2], secuencia[i][1]);
-	  digitalWrite(pin[3], secuencia[i][2]);
-	  digitalWrite(pin[4], secuencia[i][3]);
-	  digitalWrite(pin[5], secuencia[i][4]);
-	  digitalWrite(pin[6], secuencia[i][5]);
-	  digitalWrite(pin[7], secuencia[i][6]);
-	  digitalWrite(pin[8], secuencia[i][7]);
-	  usleep(retardo);
-	}
-}
-
-void tiro_vertical(int * pin){
-	int delay = 125000;
-	int x = 0;
-	float v = 4.0;
-	float a = -1.0;
-  float t = 0;
-
-	for(int i=0; i < 8; i++){
-		t = i/2.0;	//cuántos instantes de tiempo quiero mostrar
-		x = v*t + 0.5*a*t^2;
-		for(int j=0; j<8; j++)
-			digitalWrite(pin[j], 0);
-
-		digitalWrite(x, 1);
-	  usleep(delay);
-	}
-}
