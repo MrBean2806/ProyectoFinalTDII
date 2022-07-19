@@ -7,14 +7,14 @@
 
 #define FD_STDIN 0
 
-#define led1 3
-#define led2 4
-#define led3 17
-#define led4 18
-#define led5 27
-#define led6 22
-#define led7 23
-#define led8 24
+#define led1 17
+#define led2 27
+#define led3 22
+#define led4 10
+#define led5 9
+#define led6 11
+#define led7 5
+#define led8 6
 
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 

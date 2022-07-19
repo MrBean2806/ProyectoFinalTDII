@@ -1,11 +1,10 @@
 #include "animaciones.h"
 
-int multiplicador = 1;
 
+int multiplicador = 1;
 void auto_fantastico(int * pin){
-	int retardo_base = 250000;
-	int retardo = multiplicador * retardo_base;
-	for (int i = 0; i < 8; i++){
+	int retardo = 250000;
+		for (int i = 0; i < 8; i++){
 		ledsOff(pin);
 		digitalWrite(pin[i], 1);
 		int salir = check_keys();
@@ -247,6 +246,7 @@ void ledsOff(int * pin){
 int check_keys(){
 	int salir = 0;
 	char tec = getchar();
+	tec = getchar();
 	if(tec == 10)	//enter
 		salir = 1;
 	/*
