@@ -1,9 +1,10 @@
 #include "animaciones.h"
+#define retardo 250000
 
 int multiplicador = 1;
 
 void auto_fantastico(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = retardo;
 	int retardo = multiplicador * retardo_base;
 	for (int i = 0; i < 8; i++){
 		ledsOff(pin);
@@ -249,9 +250,13 @@ int check_keys(){
 	char tec = getchar();
 	if(tec == 10)	//enter
 		salir = 1;
-	if(tec == 24) //flecha arriba
-		multiplicador = multiplicador + 0.1;
-	if(tec == 23) //flecha abajo
-		multiplicador = multiplicador - 0.1;
+	if(tec == 23) //flecha abajo. Baja el retardo, sube la frecuencia.
+		if(multiplicador =! 1)
+		{
+			multiplicador = multiplicador + 0.1;
+		}
+	if(tec == 24) //flecha arriba. Sube el retardo, baja la frecuencia.
+		if(multiplicador =! 0.1)
+			multiplicador = multiplicador - 0.1;
 	return salir;
 }
