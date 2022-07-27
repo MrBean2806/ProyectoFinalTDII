@@ -1,15 +1,17 @@
 #include "animaciones.h"
 
-int multiplicador = 1;
+int multiplicador = 10;
 
 void auto_fantastico(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = 25000;
 	int retardo = multiplicador * retardo_base;
 	while(1){
+		
 		for (int i = 0; i < 8; i++){
 			ledsOff(pin);
 			digitalWrite(pin[i], 1);
 			int salir = check_keys();
+			retardo = multiplicador * retardo_base;
 			if(salir)
 				return;
 			usleep(retardo);
@@ -18,6 +20,7 @@ void auto_fantastico(int * pin){
 			ledsOff(pin);
 			digitalWrite(pin[i], 1);
 			int salir = check_keys();
+			retardo = multiplicador * retardo_base;
 			if(salir)
 				return;
 			usleep(retardo);
@@ -26,7 +29,7 @@ void auto_fantastico(int * pin){
 }
 
 void el_choque(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = 25000;
 	int retardo = multiplicador * retardo_base;
 	while(1){
 		for (int i = 0; i < 8; i++){
@@ -43,7 +46,7 @@ void el_choque(int * pin){
 
 void la_apilada(int * pin){
 	int i=0, j=0;
-	int retardo_base = 150000;
+	int retardo_base = 15000;
 	int retardo = multiplicador * retardo_base;
 	while(1){
 		for(i = 8; i > 0; i--){
@@ -71,7 +74,7 @@ void la_apilada(int * pin){
 }
 
 void la_carrera(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = 25000;
 	int retardo = multiplicador * retardo_base;
 	int secuencia[18][8] = {
 	{0,0,0,0,0,0,0,0},
@@ -112,7 +115,7 @@ void la_carrera(int * pin){
 }
 
 void la_pareja(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = 25000;
 	int retardo = multiplicador * retardo_base;
 	int suma = 0;
 	while(1){
@@ -145,7 +148,7 @@ void la_pareja(int * pin){
 }
 
 void la_serpiente(int * pin){
-	int retardo_base = 250000;
+	int retardo_base = 25000;
 	int retardo = multiplicador * retardo_base;
 	while(1){
 		int secuencia[][8] = {
@@ -177,7 +180,7 @@ void la_serpiente(int * pin){
 }
 
 void tiro_vertical(int * pin){
-	int retardo_base = 1250000;
+	int retardo_base = 125000;
 	int retardo = multiplicador * retardo_base;
 	int x = 0;
 	float v = 4.0;
@@ -200,7 +203,7 @@ void tiro_vertical(int * pin){
 }
 
 void caida_pelota(int * pin){
-	int retardo_base = 150000;
+	int retardo_base = 15000;
 	int retardo = multiplicador * retardo_base;
 	int secuencia[][8] = {
 	{0,0,0,0,0,0,0,1},
@@ -265,18 +268,19 @@ int check_keys(){
 	int salir = 0;
 	if(kbhit() != 0){
 		char tec = getchar();
+		tec = getchar();
 		if(tec == 10)	//enter
 			salir = 1;
 		if(tec == 's'){ //flecha abajo. Baja el retardo, sube la frecuencia.
-			if(multiplicador != 1)
+			if(multiplicador < 10)
 			{
-				multiplicador = multiplicador + 0.1;
+				multiplicador = multiplicador + 1;
 				printf("%d\n",multiplicador);
 			}
 		}
 		if(tec == 'w'){ //flecha arriba. Sube el retardo, baja la frecuencia.
-			if(multiplicador != 0.1){
-				multiplicador = multiplicador - 0.1;
+			if(multiplicador > 1){
+				multiplicador = multiplicador - 1;
 				printf("%d\n",multiplicador);
 			}
 		}
