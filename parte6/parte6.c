@@ -27,6 +27,8 @@
 #define led7 5
 #define led8 6
 
+#define MAX_STR_LEN 80
+
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
 
@@ -47,33 +49,22 @@ int main(){
 		pinMode(pin[i], OUTPUT);  */
 	
 	//if (wiringPiSetup () == -1) exit (1);	
+	//pcf8591Setup(BASE, Address);
 	
 	
-	int serial_port ;
-  	char dat;
-  	if ((serial_port = serialOpen ("/dev/ttyAMA0", 115200)) < 0)			/* abrir el puerto serie */
-  	{
-  		fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
-  		return 1 ;
-  	}
-
-	if (wiringPiSetup () == -1)							/* inicializa la configuracion de wiringPi */
-	{
-		fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
-		return 1 ;
-	}
-	pcf8591Setup(BASE, Address);
-	printf (" -------Comunicacion serie----\n") ;
-	while(1){
-		if(serialDataAvail (serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
-		{
-			dat = serialGetchar (serial_port);/* retorna el siguiente caracter disponible en el dispositivo serial */	
-	  		printf ("%c", dat) ;
-	  		//serialPutchar(serial_port, dat);		/* envia un unico byte por el puerto serie indicado*/
-		}
-  }
 	
 	
+	
+	
+	char str[MAX_STR_LEN];
+ 	pioInit();
+ 	printf("Inicilizando UART...\n"); 
+ 	uartInit(115200);
+ 	printf("Done\n"); 
+ 	printf("recibiendo dato...\n"); 
+ 	getStrSerial(str);
+ 	printf("Enviando dato... %s\n", str); 
+	//putStrSerial("Escribir algo:\r\n");
 	
 	
 	/*
@@ -173,4 +164,18 @@ int menu(){
 	return op; 
 }
 
+void getStrSerial(char *str){
+	int i = 0;
+	do{
+		str[i] = getCharSerial();
+	}while((str[i++] != '\r') && (i < MAX_STR_LEN));
+	str[i-1] = 0;
+}
+
+void putStrSerial(char *str){
+	int i = 0;
+	while(str[i] != 0){
+		putCharSerial(str[i++]);
+	}
+}
 
