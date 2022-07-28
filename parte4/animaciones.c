@@ -11,18 +11,18 @@ void auto_fantastico(int * pin){
 			ledsOff(pin);
 			digitalWrite(pin[i], 1);
 			int salir = check_keys();
-			retardo = multiplicador * retardo_base;
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 		for (int i = 6; i > 0; i--){
 			ledsOff(pin);
 			digitalWrite(pin[i], 1);
 			int salir = check_keys();
-			retardo = multiplicador * retardo_base;
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 	}
@@ -39,6 +39,7 @@ void el_choque(int * pin){
 			int salir = check_keys();
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 	}
@@ -57,17 +58,20 @@ void la_apilada(int * pin){
 				int salir = check_keys();
 				if(salir)
 					return;
+				retardo = multiplicador * retardo_base;
 				usleep(retardo);
 			}
 			digitalWrite(pin[j-1], 0);
 			int salir = check_keys();
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 			digitalWrite(pin[j-1], 1);
 			salir = check_keys();
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 	}
@@ -109,6 +113,7 @@ void la_carrera(int * pin){
 		int salir = check_keys();
 			if(salir)
 				return;
+		retardo = multiplicador * retardo_base;
 		usleep(retardo);
 		}
 	}
@@ -135,6 +140,7 @@ void la_pareja(int * pin){
 			int salir = check_keys();
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 		for (int j = 0; j < 8; j++)
@@ -143,6 +149,7 @@ void la_pareja(int * pin){
 		int salir = check_keys();
 		if(salir)
 			return;
+		retardo = multiplicador * retardo_base;
 		usleep(retardo);
 	}
 }
@@ -174,31 +181,31 @@ void la_serpiente(int * pin){
 			int salir = check_keys();
 			if(salir)
 				return;
-		usleep(retardo);
+			retardo = multiplicador * retardo_base;
+			usleep(retardo);
 		}
 	}
 }
 
 void tiro_vertical(int * pin){
-	int retardo_base = 125000;
-	int retardo = multiplicador * retardo_base;
+	int retardo = 125000;
 	int x = 0;
 	float v = 4.0;
 	float a = -1.0;
- 	float t = 0;
+  	float t = 0;
 
-	while(1){
-		for(int i=0; i < 8; i++){
-			t = i/2.0;	//cuÃ¡ntos instantes de tiempo quiero mostrar
-			x = 0;//v*t + 0.5*a*t^2;
-			for(int j=0; j<8; j++)
-				digitalWrite(pin[j], 0);
+	for(int i=0; i < 8; i++){
+		t = i/2.0;	//cuÃ¡ntos instantes de tiempo quiero mostrar
+		x = v*t + 0.5*a*t^2;
+		for(int j=0; j<8; j++)
+			digitalWrite(pin[j], 0);
 
-			digitalWrite(x, 1);
-			int salir = check_keys();
+		digitalWrite(x, 1);
+		int salir = check_keys();
 			if(salir)
 				return;
-		}
+		retardo = multiplicador * retardo_base;
+	  	usleep(retardo);
 	}
 }
 
@@ -254,6 +261,7 @@ void caida_pelota(int * pin){
 			int salir = check_keys();
 			if(salir)
 				return;
+			retardo = multiplicador * retardo_base;
 			usleep(retardo);
 		}
 	}
