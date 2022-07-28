@@ -34,3 +34,25 @@ int digitalRead(int pin) {
  int offset = pin % 32;
  return (GPLEV[reg] >> offset) & 0x00000001;
 }
+
+void uartInit(int baud) {
+    uint fb = 12000000/baud; // 3 MHz UART clock
+    
+    pinMode(14, ALT0);
+    pinMode(15, ALT0);
+    UART_IBRD = fb >> 6;       // 6 Fract, 16 Int bits of BRD
+    UART_FBRD = fb & 63;
+    UART_LCRHbits.WLEN = 3;     // 8 Data, 1 Stop, 0 Parity, no FIFO, no Flow
+    UART_CRbits.UARTEN = 1;     // Enable uart.
+}
+
+char getCharSerial(void) {
+    while (UART_FRbits.RXFE);    // Wait until data is available.
+    return UART_DRbits.DATA;          // Return char from serial port.
+}
+
+
+void putCharSerial(char c) {
+    while (!UART_FRbits.TXFE);
+    UART_DRbits.DATA = c;
+}
