@@ -44,25 +44,39 @@ int main(){
 
 	pioInit();
 
+	int serial_port ;
+  	char dat;
+  	if ((serial_port = serialOpen ("/dev/ttyAMA0", 115200)) < 0)			/* abrir el puerto serie */
+  	{
+    		fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
+  		return 1 ;
+  	}
+
+	if (wiringPiSetup () == -1)							/* inicializa la configuracion de wiringPi */
+	{
+	 	fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
+		return 1 ;
+	}
+
+ 	printf (" -------Comunicacion serie----\n") ;
+ 	while(1){
+	  
+	if(serialDataAvail (serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
+	{
+	  dat = serialGetchar (serial_port);		/* retorna el siguiente caracter disponible en el dispositivo serial */	
+	  printf ("%c", dat) ;
+	  //serialPutchar(serial_port, dat);		/* envia un unico byte por el puerto serie indicado*/
+	}
+
+  	}
+
+
 	for(int i=0; i<8; i++)
 		pinMode(pin[i], OUTPUT);  
 	
-	if (wiringPiSetup () == -1) exit (1);	
 	pcf8591Setup(BASE, Address);
 	
-	
-
-	int n, fd;
-	char * data;
-	fd = open("dev/ttyUSB0", O_RDRW | O_NOCTTY | O_NDELAY);
-	if( fd == -1){
-		printf("error abriendo puerto")
-	}
-	n = write(fd, "Hello\n", 6);
-	if(n<0){ printf("error palabra");
-	}
-	
-	
+	/*
 	while(1)
 	{
 		n = write(fd, "Hello\n", 6);
@@ -70,7 +84,7 @@ int main(){
 		{ 
 			printf("error palabra");
 		}
-		/*op = menu();
+		op = menu();
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
 		printf("\nVelocidad inicial: %d\n\n",vel_inicial);
