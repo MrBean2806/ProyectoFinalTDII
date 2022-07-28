@@ -54,13 +54,14 @@ int main(){
 
 	int n, fd;
 	char * data;
-	fd = open("dev/ttyUSB0", O_RDRW | O_NOCTTY | O_NDELAY);
+	fd = open("dev/ttyS0", O_RDWR | O_NOCTTY | O_NDELAY);
 	if( fd == -1){
-		printf("error abriendo puerto")
+		printf("error abriendo puerto");
 	}
 	n = write(fd, "Hello\n", 6);
-	if(n<0){ printf("error palabra");
-	}
+	if(n<0)
+		printf("error palabra");
+	
 	
 	
 	while(1)
@@ -70,6 +71,7 @@ int main(){
 		{ 
 			printf("error palabra");
 		}
+		usleep(500000);
 		/*op = menu();
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
