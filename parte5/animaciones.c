@@ -158,7 +158,7 @@ void la_pareja(int * pin, int vel_inicial){
 		usleep(retardo);
 	}
 }
-}
+
 
 void la_serpiente(int * pin, int vel_inicial){
 	int retardo_base = 25000;
@@ -201,10 +201,11 @@ void tiro_vertical(int * pin, int vel_inicial){
 	float v = 4.0;
 	float a = -1.0;
   	float t = 0;
+  	float x;
 
 	for(int i=0; i < 8; i++){
 		t = i/2.0;	//cuÃ¡ntos instantes de tiempo quiero mostrar
-		x = v*t + 0.5*a*t^2;
+		x = v*t + 0.5*a*t*t;
 		for(int j=0; j<8; j++)
 			digitalWrite(pin[j], 0);
 
