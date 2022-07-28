@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "EasyPIO_Custom.h"
 #include "animaciones.h"
+#include <fcntl.h>
 
 #include <wiringPi.h>
 #include <stdlib.h>
@@ -49,9 +50,27 @@ int main(){
 	if (wiringPiSetup () == -1) exit (1);	
 	pcf8591Setup(BASE, Address);
 	
+	
+
+	int n, fd;
+	char * data;
+	fd = open("dev/ttyUSB0", O_RDRW | O_NOCTTY | O_NDELAY);
+	if( fd == -1){
+		printf("error abriendo puerto")
+	}
+	n = write(fd, "Hello\n", 6);
+	if(n<0){ printf("error palabra");
+	}
+	
+	
 	while(1)
 	{
-		op = menu();
+		n = write(fd, "Hello\n", 6);
+		if(n<0)
+		{ 
+			printf("error palabra");
+		}
+		/*op = menu();
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
 		printf("\nVelocidad inicial: %d\n\n",vel_inicial);
@@ -82,8 +101,10 @@ int main(){
 					caida_pelota(pin,vel_inicial);
 					break;
 		}
-		ledsOff(pin);
+		ledsOff(pin);*/
 	}
+	
+	close(fd);
 	return 0;
 }
 
