@@ -46,7 +46,7 @@ void uartInit(int baud) {
     UART_CRbits.UARTEN = 1;     // Enable uart.
     
 }
-
+/*
 char getCharSerial(void) {
     
     while (UART_FRbits.RXFE);    // Wait until data is available.
@@ -58,6 +58,8 @@ char getCharSerial(void) {
 void putCharSerial(char c) {
     
     while (!UART_FRbits.TXFE);
+    
+    */
     UART_DRbits.DATA = c;
     
 }

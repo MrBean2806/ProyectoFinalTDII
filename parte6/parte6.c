@@ -1,12 +1,14 @@
 #include <termios.h>
-#include <string.h>
 #include <unistd.h>
 #include "EasyPIO_Custom.h"
 #include "animaciones.h"
 
-#include <wiringPi.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <wiringPi.h>
+#include <wiringSerial.h>
+#include <stdlib.h>
 #include <pcf8591.h>
 
 #define Address 0x48
@@ -27,21 +29,20 @@
 #define led7 5
 #define led8 6
 
-#define MAX_STR_LEN 80
 
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
 
 int main(){
-	int val;
-	int op;
-	int vel_inicial;
+	//int val;
+	//int op;
+	//int vel_inicial;
 	
-	if( !login() ){
+	/*if( !login() ){
 		puts("Limite de intentos alcanzado");
 		puts("Abortando programa...");
 		//ABORTAR
-	}
+	}*/
 
 	pioInit();
 
@@ -56,15 +57,31 @@ int main(){
 	
 	
 	
-	char str[MAX_STR_LEN];
- 	pioInit();
- 	printf("Inicilizando UART...\n"); 
- 	uartInit(115200);
- 	printf("Done\n"); 
- 	printf("recibiendo dato...\n"); 
- 	getStrSerial(str);
- 	printf("Enviando dato... %s\n", str); 
-	//putStrSerial("Escribir algo:\r\n");
+	int serial_port ;
+  	char dat;
+	if ((serial_port = serialOpen("/dev/ttyUSB0", 9600)) < 0)			/* abrir el puerto serie */
+	{
+		printf("Unable to open serial device: %s\n", strerror (errno)) ;
+		return 1 ;
+  	}
+
+	if (wiringPiSetup () == -1)							/* inicializa la configuracion de wiringPi */
+	{
+		printf("Unable to start wiringPi: %s\n", strerror (errno)) ;
+		return 1 ;
+	}
+
+	printf(" -------Comunicacion serie----\n") ;
+	while(1){
+	  
+	if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
+	{
+	  dat = serialGetchar(serial_port);		/* retorna el siguiente caracter disponible en el dispositivo serial */	
+	  printf("%c", dat) ;
+	  serialPutchar(serial_port, dat);		/* envia un unico byte por el puerto serie indicado*/
+	}
+
+  }
 	
 	
 	/*

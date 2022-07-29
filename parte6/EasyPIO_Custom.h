@@ -30,8 +30,8 @@ void pinMode(int pin, int function);
 void digitalWrite(int pin, int val);
 int digitalRead(int pin);
 void uartInit(int baud);
-char getCharSerial(void);
-void putCharSerial(char c);
+//char getCharSerial(void);
+//void putCharSerial(char c);
 
 #endif
 
