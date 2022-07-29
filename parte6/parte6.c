@@ -51,15 +51,10 @@ int main(){
 	
 	//if (wiringPiSetup () == -1) exit (1);	
 	//pcf8591Setup(BASE, Address);
-	
-	
-	
-	
-	
-	
+
 	int serial_port ;
   	char dat;
-	if ((serial_port = serialOpen("/dev/ttyUSB0", 9600)) < 0)			/* abrir el puerto serie */
+	if ((serial_port = serialOpen("/dev/ttyS0", 9600)) < 0)			/* abrir el puerto serie */
 	{
 		printf("Unable to open serial device: %s\n", strerror (errno)) ;
 		return 1 ;
@@ -180,6 +175,7 @@ int menu(){
 	}while((op < 1) || (op > 8));
 	return op; 
 }
+/*
 
 void getStrSerial(char *str){
 	int i = 0;
@@ -195,4 +191,5 @@ void putStrSerial(char *str){
 		putCharSerial(str[i++]);
 	}
 }
+* */
 
