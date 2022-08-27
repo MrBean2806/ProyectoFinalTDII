@@ -215,7 +215,7 @@ int eleccion_velocidad()
 	{
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
-		printf("\t\t\t%d \r",vel_inicial);
+		printf("%d \r",vel_inicial);
 		if(kbhit() != 0)
 		{
 			char tec = getchar();
