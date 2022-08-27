@@ -302,14 +302,14 @@ int check_keys(){
 				if(multiplicador < 10)
 				{
 					multiplicador = multiplicador + 1;
-					printf("Velocidad relativa igual a %d\n",multiplicador);
+					printf("Período relativo igual a %d\n",multiplicador);
 				}
 			}
 			if(tec == 'w'){ //flecha arriba. Sube el retardo, baja la frecuencia.
 				if(multiplicador > 1)
 				{
 					multiplicador = multiplicador - 1;
-					printf("Velocidad relativa igual a %d\n",multiplicador);
+					printf("Período relativo igual a %d\n",multiplicador);
 				}
 			}
 		}
@@ -327,7 +327,7 @@ int check_keys(){
 				if(multiplicador < 10)
 				{
 					multiplicador = multiplicador + 1;
-					printf("Velocidad relativa igual a %d\n",multiplicador);
+					printf("Período relativo igual a %d\n",multiplicador);
 				}
 			}
 			if(dat == 'w') //flecha arriba. Sube el retardo, baja la frecuencia.
@@ -335,7 +335,7 @@ int check_keys(){
 				if(multiplicador > 1)
 				{
 					multiplicador = multiplicador - 1;
-					printf("Velocidad relativa igual a %d\n",multiplicador);
+					printf("Período relativo igual a %d\n",multiplicador);
 				}
 			}
 		}
