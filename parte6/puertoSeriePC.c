@@ -42,7 +42,7 @@ int main(void){
 		n = write(fd, &tec, 1);
 		if(n<0)
 			printf("Error mandando el dato\n");
-		if(n == 10)
+		if(tec == 10)
 		{
 			puts("Seleccione la secuencia deseada [1-8]");
 			puts("1. Auto fantastico");
