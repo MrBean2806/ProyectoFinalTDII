@@ -190,7 +190,7 @@ int menu(){
 int leer_ps_menu()
 {		
 		char dat=0;
-		while(dat < '1' && dat > '8')
+		while(dat < '1' || dat > '8')
 		{
 			if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
 			{
