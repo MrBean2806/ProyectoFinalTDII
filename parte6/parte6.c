@@ -70,16 +70,16 @@ int main(){
 		return 1 ;
 	}
 	pcf8591Setup(BASE, Address);
-	
-	printf(" -------Comunicacion serie----\n") ;
 	  
+	
+	
+	
+	
+	vel_inicial = eleccion_velocidad();
 	
 	printf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
 	scanf("%d", &modo);
 	printf("Está utilizando el modo ");
-	
-	vel_inicial = eleccion_velocidad();
-	
 	if(modo == LOCAL)
 		printf("LOCAL.\n");
 	else
