@@ -187,7 +187,7 @@ int menu(){
 
 char leer_ps_menu()
 {		
-		char dat;
+		char dat=0;
 		while(dat < '1' && dat > '8')
 		{
 			if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
@@ -197,6 +197,7 @@ char leer_ps_menu()
 				//serialPutchar(serial_port, dat);	/* envia un unico byte por el puerto serie indicado*/
 			}
 		}
+		
 		return dat;
 }
 
