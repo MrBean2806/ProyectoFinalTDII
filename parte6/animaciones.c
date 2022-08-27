@@ -284,22 +284,54 @@ void ledsOff(int * pin){
 
 int check_keys(){
 	int salir = 0;
-	if(kbhit() != 0){
-		char tec = getchar();
-		tec = getchar();
-		if(tec == 10)	//enter
-			salir = 1;
-		if(tec == 's'){ //flecha abajo. Baja el retardo, sube la frecuencia.
-			if(multiplicador < 10)
-			{
-				multiplicador = multiplicador + 1;
-				printf("%d\n",multiplicador);
+	if(modo == LOCAL)
+	{
+		if(kbhit() != 0)
+		{
+			char tec = getchar();
+			tec = getchar();
+			if(tec == 10)	//enter
+				salir = 1;
+			if(tec == 's'){ //flecha abajo. Baja el retardo, sube la frecuencia.
+				if(multiplicador < 10)
+				{
+					multiplicador = multiplicador + 1;
+					printf("%d\n",multiplicador);
+				}
+			}
+			if(tec == 'w'){ //flecha arriba. Sube el retardo, baja la frecuencia.
+				if(multiplicador > 1)
+				{
+					multiplicador = multiplicador - 1;
+					printf("%d\n",multiplicador);
+				}
 			}
 		}
-		if(tec == 'w'){ //flecha arriba. Sube el retardo, baja la frecuencia.
-			if(multiplicador > 1){
-				multiplicador = multiplicador - 1;
-				printf("%d\n",multiplicador);
+	}
+	if(modo == REMOTO)
+	{
+		char dat=0;
+		if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
+		{
+			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
+			printf("%c", dat) ;
+			if(tec == 10)	//enter
+				salir = 1;
+			if(tec == 's') //flecha abajo. Baja el retardo, sube la frecuencia.
+			{ 
+				if(multiplicador < 10)
+				{
+					multiplicador = multiplicador + 1;
+					printf("%d\n",multiplicador);
+				}
+			}
+			if(tec == 'w') //flecha arriba. Sube el retardo, baja la frecuencia.
+			{ 
+				if(multiplicador > 1)
+				{
+					multiplicador = multiplicador - 1;
+					printf("%d\n",multiplicador);
+				}
 			}
 		}
 	}
