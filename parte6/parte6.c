@@ -29,31 +29,35 @@
 #define led7 5
 #define led8 6
 
+#define LOCAL	0
+#define REMOTO	1
+
+int modo=LOCAL; //variable global
+
 
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
+char leer_ps_menu();
 
 int main(){
-	//int val;
-	//int op;
-	//int vel_inicial;
+	int val;
+	int op;
+	int vel_inicial;
 	
-	/*if( !login() ){
+	if( !login() ){
 		puts("Limite de intentos alcanzado");
 		puts("Abortando programa...");
 		//ABORTAR
-	}*/
+	}
 
 	pioInit();
 
-	/*for(int i=0; i<8; i++)
-		pinMode(pin[i], OUTPUT);  */
+	for(int i=0; i<8; i++)
+		pinMode(pin[i], OUTPUT);	
 	
-	//if (wiringPiSetup () == -1) exit (1);	
-	//pcf8591Setup(BASE, Address);
-
+	
 	int serial_port ;
-  	char dat;
+	
 	if ((serial_port = serialOpen("/dev/ttyS0", 9600)) < 0)			/* abrir el puerto serie */
 	{
 		printf("Unable to open serial device: %s\n", strerror (errno)) ;
@@ -65,27 +69,32 @@ int main(){
 		printf("Unable to start wiringPi: %s\n", strerror (errno)) ;
 		return 1 ;
 	}
-
+	pcf8591Setup(BASE, Address);
+	
 	printf(" -------Comunicacion serie----\n") ;
-	while(1){
 	  
-	if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
-	{
-	  dat = serialGetchar(serial_port);		/* retorna el siguiente caracter disponible en el dispositivo serial */	
-	  printf("%c", dat) ;
-	  serialPutchar(serial_port, dat);		/* envia un unico byte por el puerto serie indicado*/
-	}
-
-  }
 	
+	prinf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
+	scanf("%d", &modo);
+	printf("Está utilizando el modo ");
+	if(modo == LOCAL)
+		printf("LOCAL.\n");
+	else
+		printf("REMOTO.\n");
 	
-	/*
 	while(1)
 	{
-		op = menu();
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
 		printf("\nVelocidad inicial: %d\n\n",vel_inicial);
+		
+		
+		
+		if(modo == LOCAL)
+			op = menu();
+		else
+			op = (int)leer_ps_menu();
+		
 		
 		switch(op){
 			case 1:	puts("Estas viendo el auto fantastico, para salir presione ENTER");
@@ -114,7 +123,7 @@ int main(){
 					break;
 		}
 		ledsOff(pin);
-	}*/
+	}
 	return 0;
 }
 
@@ -175,6 +184,23 @@ int menu(){
 	}while((op < 1) || (op > 8));
 	return op; 
 }
+
+char leer_ps_menu()
+{		
+		char dat;
+		while(dat < '1' && dat > '8')
+		{
+			if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
+			{
+				dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
+				printf("%c", dat) ;
+				//serialPutchar(serial_port, dat);	/* envia un unico byte por el puerto serie indicado*/
+			}
+		}
+		return dat;
+}
+
+
 /*
 
 void getStrSerial(char *str){
