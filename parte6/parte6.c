@@ -74,7 +74,7 @@ int main(){
 	printf(" -------Comunicacion serie----\n") ;
 	  
 	
-	prinf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
+	printf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
 	scanf("%d", &modo);
 	printf("Está utilizando el modo ");
 	if(modo == LOCAL)
