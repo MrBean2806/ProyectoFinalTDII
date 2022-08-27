@@ -1,5 +1,5 @@
 #include "animaciones.h"
-
+extern int modo
 int multiplicador = 1;
 
 void auto_fantastico(int * pin, int vel_inicial){
@@ -315,9 +315,9 @@ int check_keys(){
 		{
 			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
 			printf("%c", dat) ;
-			if(tec == 10)	//enter
+			if(dat == 10)	//enter
 				salir = 1;
-			if(tec == 's') //flecha abajo. Baja el retardo, sube la frecuencia.
+			if(dat == 's') //flecha abajo. Baja el retardo, sube la frecuencia.
 			{ 
 				if(multiplicador < 10)
 				{
@@ -325,7 +325,7 @@ int check_keys(){
 					printf("%d\n",multiplicador);
 				}
 			}
-			if(tec == 'w') //flecha arriba. Sube el retardo, baja la frecuencia.
+			if(dat == 'w') //flecha arriba. Sube el retardo, baja la frecuencia.
 			{ 
 				if(multiplicador > 1)
 				{
