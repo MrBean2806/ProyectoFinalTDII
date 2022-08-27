@@ -1,6 +1,12 @@
 #include "animaciones.h"
-extern int modo
+#define LOCAL	0
+#define REMOTO	1
+
 int multiplicador = 1;
+
+extern int serial_port;
+extern int modo;
+
 
 void auto_fantastico(int * pin, int vel_inicial){
 	int retardo_base = 25000;
