@@ -196,6 +196,7 @@ int leer_ps_menu()
 			{
 				dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
 				printf("%c", dat) ;
+				fflush(stdin);
 				//serialPutchar(serial_port, dat);	/* envia un unico byte por el puerto serie indicado*/
 			}
 		}

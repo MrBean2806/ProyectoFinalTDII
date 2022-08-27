@@ -320,6 +320,7 @@ int check_keys(){
 		if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
 		{
 			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
+			fflush(stdin);
 			printf("%c", dat) ;
 			if(dat == 10)	//enter
 				salir = 1;
