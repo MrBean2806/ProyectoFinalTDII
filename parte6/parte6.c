@@ -38,9 +38,9 @@ int serial_port;
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
 int leer_ps_menu();
+int eleccion_velocidad();
 
 int main(){
-	int val;
 	int op;
 	int vel_inicial;
 	
@@ -82,11 +82,13 @@ int main(){
 	else
 		printf("REMOTO.\n");
 	
+	//seccion destinada a eleccion de la velocidad
+	
+	vel_inicial = eleccion_velocidad();
+	
 	while(1)
 	{
-		val = analogRead(A0);
-		vel_inicial = (val*9/255.0)+1;
-		printf("\nVelocidad inicial: %d\n\n",vel_inicial);
+		
 		
 		
 		
@@ -203,21 +205,35 @@ int leer_ps_menu()
 }
 
 
-/*
-
-void getStrSerial(char *str){
-	int i = 0;
-	do{
-		str[i] = getCharSerial();
-	}while((str[i++] != '\r') && (i < MAX_STR_LEN));
-	str[i-1] = 0;
-}
-
-void putStrSerial(char *str){
-	int i = 0;
-	while(str[i] != 0){
-		putCharSerial(str[i++]);
+int eleccion_velocidad()
+{
+	int val;
+	char tec = 0;
+	int vel_inicial;
+	while(tec != 10)
+	{
+		val = analogRead(A0);
+		vel_inicial = (val*9/255.0)+1;
+		printf("\nVelocidad inicial: %d\n\n",vel_inicial);
+		if(kbhit() != 0)
+		{
+			char tec = getchar();
+			tec = getchar();
+		}	
 	}
+	
+	
+	printf("\nVelocidad inicial: %d\n\n",vel_inicial);
+
+	return vel_inicial;
 }
-* */
+
+
+
+
+
+
+
+
+
 
