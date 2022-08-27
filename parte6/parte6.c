@@ -37,7 +37,7 @@ int serial_port;
 
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
-char leer_ps_menu();
+int leer_ps_menu();
 
 int main(){
 	int val;
@@ -93,7 +93,9 @@ int main(){
 		if(modo == LOCAL)
 			op = menu();
 		else
-			op = (int)leer_ps_menu();
+			op = leer_ps_menu();
+
+		
 		
 		
 		switch(op){
@@ -185,7 +187,7 @@ int menu(){
 	return op; 
 }
 
-char leer_ps_menu()
+int leer_ps_menu()
 {		
 		char dat=0;
 		while(dat < '1' && dat > '8')
@@ -197,8 +199,7 @@ char leer_ps_menu()
 				//serialPutchar(serial_port, dat);	/* envia un unico byte por el puerto serie indicado*/
 			}
 		}
-		
-		return dat;
+		return (int)dat - 48;
 }
 
 
