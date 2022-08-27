@@ -210,12 +210,12 @@ int eleccion_velocidad()
 	int val;
 	char tec = 0;
 	int vel_inicial;
-	printf("\nVelocidad inicial:\n\t\t\t");
+	printf("\nVelocidad inicial:\n");
 	while(tec != 10)
 	{
 		val = analogRead(A0);
 		vel_inicial = (val*9/255.0)+1;
-		printf("%d\r",vel_inicial);
+		printf("\t\t\t%d \r",vel_inicial);
 		if(kbhit() != 0)
 		{
 			char tec = getchar();
