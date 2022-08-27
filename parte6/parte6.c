@@ -33,7 +33,7 @@
 #define REMOTO	1
 
 int modo=LOCAL; //variable global
-
+int serial_port;
 
 int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 int login(void);
@@ -56,7 +56,7 @@ int main(){
 		pinMode(pin[i], OUTPUT);	
 	
 	
-	int serial_port ;
+	
 	
 	if ((serial_port = serialOpen("/dev/ttyS0", 9600)) < 0)			/* abrir el puerto serie */
 	{
