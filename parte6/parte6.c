@@ -77,6 +77,9 @@ int main(){
 	printf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
 	scanf("%d", &modo);
 	printf("Está utilizando el modo ");
+	
+	vel_inicial = eleccion_velocidad();
+	
 	if(modo == LOCAL)
 		printf("LOCAL.\n");
 	else
@@ -84,7 +87,7 @@ int main(){
 	
 	//seccion destinada a eleccion de la velocidad
 	
-	vel_inicial = eleccion_velocidad();
+	
 	
 	while(1)
 	{
@@ -218,7 +221,6 @@ int eleccion_velocidad()
 		printf("%d \r",vel_inicial);
 		if(kbhit() != 0)
 		{
-			char tec = getchar();
 			tec = getchar();
 		}	
 	}
