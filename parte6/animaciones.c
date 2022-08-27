@@ -302,14 +302,14 @@ int check_keys(){
 				if(multiplicador < 10)
 				{
 					multiplicador = multiplicador + 1;
-					printf("%d\n",multiplicador);
+					printf("Velocidad relativa igual a %d\n",multiplicador);
 				}
 			}
 			if(tec == 'w'){ //flecha arriba. Sube el retardo, baja la frecuencia.
 				if(multiplicador > 1)
 				{
 					multiplicador = multiplicador - 1;
-					printf("%d\n",multiplicador);
+					printf("Velocidad relativa igual a %d\n",multiplicador);
 				}
 			}
 		}
@@ -320,8 +320,6 @@ int check_keys(){
 		if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
 		{
 			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
-			fflush(stdin);
-			printf("%c", dat) ;
 			if(dat == 10)	//enter
 				salir = 1;
 			if(dat == 's') //flecha abajo. Baja el retardo, sube la frecuencia.
@@ -329,7 +327,7 @@ int check_keys(){
 				if(multiplicador < 10)
 				{
 					multiplicador = multiplicador + 1;
-					printf("%d\n",multiplicador);
+					printf("Velocidad relativa igual a %d\n",multiplicador);
 				}
 			}
 			if(dat == 'w') //flecha arriba. Sube el retardo, baja la frecuencia.
@@ -337,7 +335,7 @@ int check_keys(){
 				if(multiplicador > 1)
 				{
 					multiplicador = multiplicador - 1;
-					printf("%d\n",multiplicador);
+					printf("Velocidad relativa igual a %d\n",multiplicador);
 				}
 			}
 		}

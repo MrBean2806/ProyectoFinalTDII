@@ -25,7 +25,15 @@ int main(void){
 		printf("Error abriendo el puerto\n");
 	}
 	printf("Puerto serie abierto\n");
-	
+	puts("Seleccione la secuencia deseada [1-8]");
+	puts("1. Auto fantastico");
+	puts("2. El choque");
+	puts("3. La apilada");
+	puts("4. La carrera");
+	puts("5. La pareja");
+	puts("6. La serpiente");
+	puts("7. Tiro vertical");
+	puts("8. Caida pelota");
 	
 	while(1)
 	{
@@ -34,6 +42,18 @@ int main(void){
 		n = write(fd, &tec, 1);
 		if(n<0)
 			printf("Error mandando el dato\n");
+		if(n == 10)
+		{
+			puts("Seleccione la secuencia deseada [1-8]");
+			puts("1. Auto fantastico");
+			puts("2. El choque");
+			puts("3. La apilada");
+			puts("4. La carrera");
+			puts("5. La pareja");
+			puts("6. La serpiente");
+			puts("7. Tiro vertical");
+			puts("8. Caida pelota");
+		}
 	}
 	
 	
