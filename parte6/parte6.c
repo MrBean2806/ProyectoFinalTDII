@@ -226,7 +226,7 @@ int eleccion_velocidad()
 	}
 	
 	
-	printf("\nVelocidad inicial: %d\n\n",vel_inicial);
+	printf("\Período inicial: %d\n\n",vel_inicial);
 
 	return vel_inicial;
 }
