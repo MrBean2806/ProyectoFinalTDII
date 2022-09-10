@@ -22,7 +22,7 @@ void tiro_vertical();
 void caida_pelota();
 void ledsOff();
 
-int v[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
+int pin[8] = {led1, led2, led3, led4, led5, led6, led7, led8};
 
 int main(void){
 	pioInit();

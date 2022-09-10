@@ -54,6 +54,7 @@ int main(){
 		case 8:	caida_pelota(pin);
 				break;
 	}
+	ledsOff();
 	return 0;
 }
 
