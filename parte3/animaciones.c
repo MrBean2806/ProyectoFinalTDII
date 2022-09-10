@@ -266,6 +266,9 @@ int check_keys(){
 		if(tec == 10)	//enter
 			salir = 1;
 	}
+	return salir;
+}
+
 	
 	
 	/*
@@ -274,8 +277,6 @@ int check_keys(){
 	if(tec == 23) //flecha abajo
 		multiplicador = multiplicador - 0.1;
 	*/
-	return salir;
-}
 
 int kbhit()
 {
