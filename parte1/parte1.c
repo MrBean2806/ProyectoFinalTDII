@@ -98,7 +98,7 @@ void el_choque(){
 		ledsOff();
 
 		digitalWrite(pin[i], 1);
-		digitalWrite(v[7 - i], 1);
+		digitalWrite(pin[7 - i], 1);
 		usleep(retardo);
 	}
 }
@@ -114,7 +114,7 @@ void la_apilada(){
 			digitalWrite(pin[i], 0);
 		}
 		usleep(retardo);
-		digitalWrite(v[i-1], 1);
+		digitalWrite(pin[i-1], 1);
 		final--;
   	}
 }
@@ -167,7 +167,7 @@ void la_pareja(void){
 		if(i != 8)
 				digitalWrite(pin[i], 1);
 		if(i != 0)
-				digitalWrite(v[i-1], 1);
+				digitalWrite(pin[i-1], 1);
 		suma++;
 		usleep(retardo);
 	}
@@ -215,7 +215,7 @@ void tiro_vertical(){
 		x = round(vel*t + 0.5*a*t*t);
 		ledsOff();
 		if(x >= 1)
-			digitalWrite(v[x-1], 1);
+			digitalWrite(pin[x-1], 1);
 		usleep(retardo);
 		t += dt; 
   	}
