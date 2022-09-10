@@ -12,7 +12,7 @@ int main(void){
 	struct termios t_old, t_new;
 	tcgetattr(FD_STDIN, &t_old); //lee atributos del teclado
 	t_new = t_old;
-	t_new.c_lflag &= ~(ICANON); // anula entrada canonica y eco
+	t_new.c_lflag &= ~(ICANON); // anula entrada canonica
 	tcsetattr(FD_STDIN,TCSANOW,&t_new);
 
 

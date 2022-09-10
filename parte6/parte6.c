@@ -77,6 +77,14 @@ int main(){
 	
 	vel_inicial = eleccion_velocidad();
 	
+	//Una vez realizadas las verificaciones, se anula la entrada canónica para
+	//no presionar enter cada vez que se presiona una tecla.
+	struct termios t_old, t_new;
+	tcgetattr(FD_STDIN, &t_old); //lee atributos del teclado
+	t_new = t_old;
+	t_new.c_lflag &= ~(ICANON); // anula entrada canonica
+	tcsetattr(FD_STDIN,TCSANOW,&t_new); //actualiza con los valores nuevos de la config.
+
 	printf("Seleccione modo de operación\n Para modo LOCAL, seleccione 0.\n Para modo REMOTO, seleccione 1.\n");
 	scanf("%d", &modo);
 	printf("Está utilizando el modo ");
@@ -131,6 +139,8 @@ int main(){
 		}
 		ledsOff(pin);
 	}
+
+	tcsetattr(FD_STDIN, TCSANOW, &t_old); //actualiza con los valores previos
 	return 0;
 }
 
