@@ -319,7 +319,7 @@ int check_keys(){
 		char dat=0;
 		if(serialDataAvail(serial_port)) 		/* retorna el numero de caracteres disponibles para leer o -1*/
 		{
-			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial */
+			dat = serialGetchar(serial_port);	/* retorna el siguiente caracter disponible en el dispositivo serial*/
 			if(dat == 10)	//enter
 				salir = 1;
 			if(dat == 's') //flecha abajo. Baja el retardo, sube la frecuencia.

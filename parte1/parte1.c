@@ -28,7 +28,7 @@ int main(void){
 	pioInit();
 
 	for(int i=0; i<8; i++)
-		pinMode(v[i], OUTPUT);  
+		pinMode(pin[i], OUTPUT);  
 	
 	int op = menu();
 	for(int i=0; i<3; i++){
@@ -78,16 +78,16 @@ void auto_fantastico(){
 	const int retardo = 250000;
 	for (int i = 0; i < 8; i++){
 		for (int j = 0; j < 8; j++)
-			digitalWrite(v[j], 0);
+			digitalWrite(pin[j], 0);
 		
-		digitalWrite(v[i], 1);
+		digitalWrite(pin[i], 1);
 		usleep(retardo);
 	}
 	for (int i = 6; i > 0; i--){
 		for (int j = 0; j < 8; j++)
-			digitalWrite(v[j], 0);
+			digitalWrite(pin[j], 0);
 
-		digitalWrite(v[i], 1);
+		digitalWrite(pin[i], 1);
 		usleep(retardo);
 	}
 }
@@ -97,7 +97,7 @@ void el_choque(){
 	for (int i = 0; i < 8; i++){
 		ledsOff();
 
-		digitalWrite(v[i], 1);
+		digitalWrite(pin[i], 1);
 		digitalWrite(v[7 - i], 1);
 		usleep(retardo);
 	}
@@ -109,9 +109,9 @@ void la_apilada(){
  	int final = 8;
  	for(j=0; j<8;j++){
 		for(i=0; i<final; i++){
-			digitalWrite(v[i], 1);
+			digitalWrite(pin[i], 1);
 			usleep(250);
-			digitalWrite(v[i], 0);
+			digitalWrite(pin[i], 0);
 		}
 		usleep(retardo);
 		digitalWrite(v[i-1], 1);
@@ -165,14 +165,14 @@ void la_pareja(void){
 		ledsOff();
 
 		if(i != 8)
-				digitalWrite(v[i], 1);
+				digitalWrite(pin[i], 1);
 		if(i != 0)
 				digitalWrite(v[i-1], 1);
 		suma++;
 		usleep(retardo);
 	}
 	for (int j = 0; j < 8; j++)
-		digitalWrite(v[j], 0);
+		digitalWrite(pin[j], 0);
 	suma = 0;
 	usleep(retardo);
 }
@@ -274,5 +274,5 @@ void caida_pelota(){
 
 void ledsOff(){
   for (int j = 0; j < 8; j++)
-    digitalWrite(v[j], 0);
+    digitalWrite(pin[j], 0);
 }
