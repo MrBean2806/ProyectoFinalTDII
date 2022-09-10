@@ -69,7 +69,8 @@ int login(){
 	tcgetattr(FD_STDIN, &t_old); //lee atributos del teclado
 	t_new = t_old;
 	t_new.c_lflag &= ~(ECHO | ICANON); // anula entrada canonica y eco
-	tcsetattr(FD_STDIN,TCSANOW,&t_new); //actualiza con los valores nuevos de la config. TCSANOW = activar la modificacion inmediatamente
+	tcsetattr(FD_STDIN,TCSANOW,&t_new); //actualiza con los valores nuevos de la config. TCSANOW = activar 
+	//la modificacion inmediatamente
 
 	while(intentos < 3){
 		puts("Ingrese su password de 5 digitos:");
