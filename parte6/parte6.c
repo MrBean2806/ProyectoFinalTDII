@@ -47,7 +47,7 @@ int main(){
 	if( !login() ){
 		puts("Limite de intentos alcanzado");
 		puts("Abortando programa...");
-		//ABORTAR
+		return
 	}
 
 	pioInit();
